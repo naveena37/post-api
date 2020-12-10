@@ -1,6 +1,5 @@
 package nz.co.post.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nz.co.post.ObjectMapperProvider;
 import nz.co.post.ServiceConfig;
@@ -13,6 +12,7 @@ import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +56,7 @@ public class PostServiceImpl
     List<User> users = null;
     try {
       users = Arrays.asList(mapper.readValue(response.readEntity(String.class), User[].class));
-    } catch (JsonProcessingException e) {
+    } catch (IOException e) {
       LOGGER.error("Could not process /users json response...");
     }
 
@@ -99,7 +99,7 @@ public class PostServiceImpl
     List<Post> posts = null;
     try {
       posts = Arrays.asList(mapper.readValue(response.readEntity(String.class), Post[].class));
-    } catch (JsonProcessingException e) {
+    } catch (IOException e) {
       LOGGER.error("Could not process /posts json response...");
     }
     return posts;
@@ -116,7 +116,7 @@ public class PostServiceImpl
     List<Comment> comments = null;
     try {
       comments = Arrays.asList(mapper.readValue(response.readEntity(String.class), Comment[].class));
-    } catch (JsonProcessingException e) {
+    } catch (IOException e) {
       LOGGER.error("Could not process /comments json response...");
     }
 
