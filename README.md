@@ -1,6 +1,12 @@
 ## Post API ##
 The Post API is an Aggregator API to retrieve posts and comments for a given user.
 
+## Prerequisites
+Java version:   1.8
+Gradle version: 4.8
+
+[Note:To upgrade to Java 11, several DropWizard libraries and Gradle distribution has to undergo upgrades]
+
 ## Build shadowJar
 ```bash
 ./gradlew shadowJar
@@ -8,7 +14,7 @@ The Post API is an Aggregator API to retrieve posts and comments for a given use
 Java and gradle versions are displayed in console as
 ```bash
 Configure project :
-Running java version: 11.0.6
+Running java version: 1.8.0_191
 Running gradle version: 4.8
 ```
 
@@ -29,16 +35,11 @@ Can see the following in console..
 2020-12-10 18:18:53,756 3627 INFO [main] [] n.c.p.PostApplication - Application is up and running.
 ```
 
-## Swagger UI for interactive API documentation
-* Swagger UI location: `[protocol]://[domain]:[port]/api/swagger`.
-
+## Access the API using bundled Swagger UI
+* Swagger UI location: 
     * http://localhost:8080/api/swagger
     * http://localhost:8080/api/swagger#/Users
     * http://localhost:8080/api/swagger#/Posts
-* Swagger document location: `[protocol]://[domain]:[port]/api/swagger.[json|yaml]`
-
-
-To see all available tasks `./gradlew task`
 
 ### Unit Test
 ```bash
@@ -47,4 +48,6 @@ To see all available tasks `./gradlew task`
 
 ### Test Results
 Test results can be found in `[project directory]/build/reports/tests`
+
+To see all available tasks `./gradlew task`
 
