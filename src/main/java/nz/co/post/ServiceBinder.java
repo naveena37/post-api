@@ -1,6 +1,5 @@
 package nz.co.post;
 
-import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.setup.Environment;
 import nz.co.post.service.PostService;
 import nz.co.post.service.impl.PostServiceImpl;
@@ -29,8 +28,5 @@ public class ServiceBinder
     bind(environment).to(Environment.class);
 
     bind(PostServiceImpl.class).to(PostService.class);
-
-    // install(new ServiceContextBinder(configuration.getServiceTLA(), configuration.getEnvironment(), configuration.getInstance()));
-
   }
 }
