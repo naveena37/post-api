@@ -1,0 +1,72 @@
+buildscript {
+  dependencies {
+    classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+    classpath 'org.unbroken-dome.gradle-plugins:gradle-testsets-plugin:1.5.0'
+    classpath 'com.github.ben-manes:gradle-versions-plugin:0.20.0'
+    classpath 'org.owasp:dependency-check-gradle:3.3.0'
+  }
+}
+
+plugins {
+  id 'java'
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'jacoco'
+apply plugin: 'org.unbroken-dome.test-sets'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'org.owasp.dependencycheck'
+
+logger.quiet "Running java version: " + System.properties['java.version']
+logger.quiet "Running gradle version: $gradle.gradleVersion"
+
+version = '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+ext {
+  dropwizardVersion = '1.3.5'
+  jmxRemoteOptionalVersion = '5.0'
+}
+
+dependencies {
+  compile "io.dropwizard:dropwizard-assets:${dropwizardVersion}"
+  compile "io.dropwizard:dropwizard-client:${dropwizardVersion}"
+  compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+  compile "io.dropwizard:dropwizard-jackson:${dropwizardVersion}"
+  compile "org.glassfish.main.external:jmxremote_optional-repackaged:${jmxRemoteOptionalVersion}"
+  compile "com.smoketurner:dropwizard-swagger:1.3.17-1"
+
+  testCompile "io.dropwizard:dropwizard-testing:${dropwizardVersion}"
+  testCompile "org.mockito:mockito-core:2.20.1"
+}
+
+processResources {
+  // Always processResources so that the application.version can always be inserted into the swagger UI.
+  outputs.upToDateWhen{ false }
+  filesMatching('swaggerui/index.html') {
+    filter org.apache.tools.ant.filters.ReplaceTokens, tokens: ['application.version': version.toString()]
+  }
+}
+
+jar {
+  manifest {
+    attributes(
+      'Main-Class': 'nz.co.post.PostApplication'
+    )
+  }
+}
+
+shadowJar {
+  mergeServiceFiles()
+}
+
+task copyYml(type: Copy) {
+  from 'src/yml'
+  into 'build'
+}
+
+build.dependsOn shadowJar, copyYml
+

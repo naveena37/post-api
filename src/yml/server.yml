@@ -1,0 +1,30 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 8080
+  adminConnectors:
+  - type: http
+    port: 8081
+  rootPath: /api
+
+environment: local
+instance: Unknown
+
+serviceName: Post
+
+requestResponseLoggingEnabled: ${REQUEST_RESPONSE_LOGGING:-true}
+logging:
+  level: INFO
+  appenders:
+    - type: console
+      logFormat: "%d %r %p [%t] [%X{serviceId}] %c{1} - %m%n"
+
+swagger:
+  resourcePackage: nz.co.post.v1
+  title: PostApplication
+  version: DEV-SNAPSHOT
+  schemes:
+    - http
+    - https
+
+clientUrl: "https://jsonplaceholder.typicode.com"
