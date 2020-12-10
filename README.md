@@ -1,5 +1,5 @@
 ## Post API ##
-The Post API is an Aggregator API to retrieving posts and comments for a given user.
+The Post API is an Aggregator API to retrieve posts and comments for a given user.
 
 ## Build shadowJar
 ```bash
